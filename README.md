@@ -12,6 +12,9 @@ https://github.com/kenjiSpecial/tubugl-material-kyoshitsu
 
 ### #0 - Phong Material
 
+[![](./docs/00/thumbnail.png)](https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html)
+
+
 #### referrence
 - http://multivis.net/lecture/phong.html
 - http://www.mathematik.uni-marburg.de/~thormae/lectures/graphics1/code/WebGLShaderLightMat/ShaderLightMat.html
