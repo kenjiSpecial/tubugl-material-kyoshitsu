@@ -5,15 +5,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "00": "parcel examples/00-example/index.html --no-hmr",
-    "01": "parcel examples/01-loadingExample/index.html --no-hmr",
-    "dist00": "parcel build examples/00-example/index.html -d docs/00 --public-url ./",
-    "dist01": "parcel build examples/01-loadingExample/index.html -d docs/01 --public-url ./",
+    "00": "parcel examples/00-phongMaterial/index.html --no-hmr",
+    "dist00": "parcel build examples/00-phongMaterial/index.html -d docs/00 --public-url ./",
     "screenshot00": "node ./node/screenshot.js --dir=00",
-    "screenshot01": "node ./node/screenshot.js --dir=01",
-    "docs": "python -m SimpleHTTPServer 8000"
+    "docs": "python -m SimpleHTTPServer 8080"
   },
   "dependencies": {
+    "chroma-js": "^1.3.6",
     "gl-matrix": "^2.4.0",
     "tubugl-3d-shape": "^1.5.3",
     "tubugl-camera": "^1.3.3",
@@ -24,6 +22,7 @@
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
     "gsap": "^1.20.3",
     "minimist": "^1.2.0",
     "parcel-plugin-glsl": "kenjiSpecial/parcel-plugin-glsl",

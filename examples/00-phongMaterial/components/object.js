@@ -57,11 +57,11 @@ export class ModelObject {
 		this._cnt = data.index.array.length;
 	}
 
-	render(camera) {
-		this.update(camera).draw();
+	render(camera, color, pointLight) {
+		this.update(camera, color, pointLight).draw();
 	}
 
-	update(camera) {
+	update(camera, color, pointLight) {
 		this._program.use();
 
 		this._positionBuffer.bind().attribPointer(this._program);
@@ -89,6 +89,53 @@ export class ModelObject {
 			this._program.getUniforms('normalMatrix').location,
 			false,
 			this.normalMatrix
+		);
+
+		this._gl.uniform3f(
+			this._program.getUniforms('uAmbientColor').location,
+			color.glAmbientColor[0],
+			color.glAmbientColor[1],
+			color.glAmbientColor[2]
+		);
+
+		this._gl.uniform3f(
+			this._program.getUniforms('uDiffuseColor').location,
+			color.glDiffuseColor[0],
+			color.glDiffuseColor[1],
+			color.glDiffuseColor[2]
+		);
+
+		this._gl.uniform3f(
+			this._program.getUniforms('uSpecularColor').location,
+			color.glSpecularColor[0],
+			color.glSpecularColor[1],
+			color.glSpecularColor[2]
+		);
+
+		this._gl.uniform3f(
+			this._program.getUniforms('uLightWorldPosition').location,
+			pointLight.position[0],
+			pointLight.position[1],
+			pointLight.position[2]
+		);
+
+		this._gl.uniform1f(this._program.getUniforms('uShininess').location, pointLight.shininess);
+		this._gl.uniform1f(
+			this._program.getUniforms('uLightPower').location,
+			pointLight.lightPower * pointLight.lightPower
+		);
+		this._gl.uniform3f(
+			this._program.getUniforms('uLightColor').location,
+			pointLight.glLightColor[1],
+			pointLight.glLightColor[2],
+			pointLight.glLightColor[0]
+		);
+
+		this._gl.uniform3f(
+			this._program.getUniforms('uCameraPosition').location,
+			camera.position.x,
+			camera.position.y,
+			camera.position.z
 		);
 
 		return this;

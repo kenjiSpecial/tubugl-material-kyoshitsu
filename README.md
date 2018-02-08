@@ -1,6 +1,5 @@
-# parcel-prototype-kit
+# tubugl-material kyoshitsu
 
-[![NPM version][npm-image]][npm-url] 
 
 prototype kit with parcel
 
@@ -32,6 +31,8 @@ yarn run ###-###
 [npm-url]: https://www.npmjs.com/package/###-###
  
 ## reference
+
+ 
 
 - http://multivis.net/lecture/phong.html
 - http://www.mathematik.uni-marburg.de/~thormae/lectures/graphics1/code/WebGLShaderLightMat/ShaderLightMat.html

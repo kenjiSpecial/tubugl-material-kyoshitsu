@@ -20,7 +20,6 @@ void main(){
     gl_Position = projectionMatrix * viewMatrix * worldPositoin;
 
     vNormal =  mat3(normalMatrix) * normal;
-//    vNormal =   normal ;
     vSurfaceToLight =uLightWorldPosition - worldPositoin.xyz;
     vSurfacetoView = uCameraPosition - worldPositoin.xyz;
 }
