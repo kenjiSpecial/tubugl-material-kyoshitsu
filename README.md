@@ -1,6 +1,6 @@
 # tubugl-material kyoshitsu
 
-Implement rendering of several material with [tubugl](https://github.com/kenjiSpecial/tubugl)
+Implement rendering of shapes with several material with [tubugl](https://github.com/kenjiSpecial/tubugl)
 
 
 ## Contents
