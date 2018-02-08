@@ -5,7 +5,7 @@ Implement rendering of shapes with several material with [tubugl](https://github
 
 ## Contents
 
-https://github.com/kenjiSpecial/tubugl-material-kyoshitsu
+https://kenjispecial.github.io/tubugl-material-kyoshitsu/
 
 
 ### Material
