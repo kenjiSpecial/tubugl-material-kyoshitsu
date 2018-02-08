@@ -1,16 +1,19 @@
 # tubugl-material kyoshitsu
 
-Implement rendering of several material with [tubugl](https://github.com/kenjiSpecial/tubugl)
+Implement rendering of shapes with several material with [tubugl](https://github.com/kenjiSpecial/tubugl)
 
 
 ## Contents
 
-https://github.com/kenjiSpecial/tubugl-material-kyoshitsu
+https://kenjispecial.github.io/tubugl-material-kyoshitsu/
 
 
 ### Material
 
 ### #0 - Phong Material
+
+[![](./docs/00/thumbnail.png)](https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html)
+
 
 #### referrence
 - http://multivis.net/lecture/phong.html
