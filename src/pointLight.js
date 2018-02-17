@@ -3,13 +3,13 @@ const chroma = require('chroma-js');
 import { vec3 } from 'gl-matrix';
 
 export class PointLight {
-	constructor(xx = 0, yy = 0, zz = 0, shininess = 30, lightColor = '#ffffff', lightPower = 100) {
-		this.shininess = shininess;
+	constructor(xx = 0, yy = 0, zz = 0, lightColor = '#ffffff', decay = 1, distance = 500) {
 		this.position = vec3.create();
 		vec3.set(this.position, xx, yy, zz);
 
 		this.lightColor = lightColor;
-		this.lightPower = lightPower;
+		this.decay = decay;
+		this.distance = distance;
 	}
 
 	set lightColor(value) {
