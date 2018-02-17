@@ -26,7 +26,7 @@ https://kenjispecial.github.io/tubugl-material-kyoshitsu/
 
 https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html
 
-### #0 - Lamber Material
+### #1 - Lamber Material
 
 [![](./docs/01/thumbnail.png)](https://kenjispecial.github.io/tubugl-material-kyoshitsu/01/index.html)
 
