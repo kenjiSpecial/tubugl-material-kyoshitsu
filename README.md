@@ -26,6 +26,21 @@ https://kenjispecial.github.io/tubugl-material-kyoshitsu/
 
 https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html
 
+### #0 - Lamber Material
+
+[![](./docs/01/thumbnail.png)](https://kenjispecial.github.io/tubugl-material-kyoshitsu/01/index.html)
+
+
+#### referrence
+- https://threejs.org/docs/index.html#api/materials/MeshLambertMaterial
+
+
+#### example
+
+https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html
+
+
+
 ## Running the examples locally
 
 you need to install [parcel](https://github.com/parcel-bundler/parcel) to run examples locally
