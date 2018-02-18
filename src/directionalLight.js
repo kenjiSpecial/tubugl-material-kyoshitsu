@@ -15,7 +15,7 @@ export class DirectionalLight {
 	updateDirection() {
 		vec3.set(this.direction, this.position.x, this.position.y, this.position.z);
 		vec3.normalize(this.direction, this.direction);
-		console.log('[directionLight updateDirection]', this.direction);
+		// console.log('[directionLight updateDirection]', this.direction);
 	}
 
 	set lightColor(value) {
@@ -27,3 +27,4 @@ export class DirectionalLight {
 		return this._lightColor;
 	}
 }
+	

@@ -9,5 +9,8 @@ GitHub: [https://github.com/kenjiSpecial/tubugl-material-kyoshitsu](https://gith
 
 [![](./01/thumbnail.png)](./01/index.html)
 
+### [#01 - reflect and refract Lamber Material](./02/index.html)
+
+[![](./02/thumbnail.png)](./02/index.html)
 
 All examples were made with [tubugl](https://github.com/kenjiSpecial/tubugl)
