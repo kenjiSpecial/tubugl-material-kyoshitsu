@@ -37,9 +37,20 @@ https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html
 
 #### example
 
-https://kenjispecial.github.io/tubugl-material-kyoshitsu/00/index.html
+https://kenjispecial.github.io/tubugl-material-kyoshitsu/01/index.html
+
+### #1 - Reflect and Refract Lamber Material
+
+[![](./docs/02/thumbnail.png)](https://kenjispecial.github.io/tubugl-material-kyoshitsu/02/index.html)
 
 
+#### referrence
+- https://threejs.org/docs/index.html#api/materials/MeshLambertMaterial
+
+
+#### example
+
+https://kenjispecial.github.io/tubugl-material-kyoshitsu/01/index.html
 
 ## Running the examples locally
 
@@ -48,7 +59,7 @@ you need to install [parcel](https://github.com/parcel-bundler/parcel) to run ex
 ```sh
 yarn
 
-yarn run 00 # 00 - 
+yarn run 00 # 00 - 03
 
 ```
 
