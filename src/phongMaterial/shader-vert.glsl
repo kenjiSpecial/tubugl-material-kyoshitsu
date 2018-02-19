@@ -1,25 +1,53 @@
-precision mediump float;
+precision highp float;
+precision highp int;
 
-attribute vec4 position;
-attribute vec3 normal;
+#define PHONG
 
-uniform vec3 uLightWorldPosition;
-uniform vec3 uCameraPosition;
+varying vec3 vWorldPosition;
+varying vec3 vViewPosition;
+varying vec3 vNormal;
 
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
 uniform mat4 normalMatrix;
 
-varying vec3 vNormal;
-varying vec3 vSurfaceToLight;
-varying vec3 vSurfacetoView;
+attribute vec3 position;
+attribute vec3 normal;
+attribute vec2 uv;
 
 void main(){
-    vec4 worldPositoin = modelMatrix * position;
-    gl_Position = projectionMatrix * viewMatrix * worldPositoin;
+    // vUv = uv;
 
-    vNormal =  mat3(normalMatrix) * normal;
-    vSurfaceToLight =uLightWorldPosition - worldPositoin.xyz;
-    vSurfacetoView = uCameraPosition - worldPositoin.xyz;
+    // objectNormal
+    // <beginnormal_vertex.glsl>
+    // vec3 objectNormal = vec3( normal );
+
+    //  defaultnormal_vertex
+    vec3 transformedNormal = vec3(normalMatrix * vec4(normal, 1.0));
+    
+    // #ifndef FLAT_SHADED // Normal computed with derivatives when FLAT_SHADED
+
+	vNormal = transformedNormal ;
+
+    // #endif
+    
+    // begin_vertex.glsl
+    vec3 transformed = vec3( position );
+
+    // project_vertex.glsl
+    vec4 mvPosition = viewMatrix * modelMatrix * vec4( transformed, 1.0 );
+
+    gl_Position = projectionMatrix * mvPosition;
+
+    vViewPosition = - mvPosition.xyz;
+    
+
+    vec4 worldPosition = modelMatrix * vec4( transformed, 1.0 );
+
+    // #endif
+    
+    // #include <envmap_vertex>
+    vWorldPosition = worldPosition.xyz;
+
 }

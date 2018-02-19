@@ -14,8 +14,8 @@ import { PointLightShape } from './components/pointLightShape';
 const baseVertexShaderSrc = require('./components/shaders/shader-vert.glsl');
 const baseFragmentShaderSrc = require('./components/shaders/shader-frag.glsl');
 
-const phongVertexShaderSrc = require('../../src/phongMaterial/shader-vert.glsl');
-const phongFragmentShaderSrc = require('../../src/phongMaterial/shader-frag.glsl');
+const phongVertexShaderSrc = require('../../src/old/phongMaterial/shader-vert.glsl');
+const phongFragmentShaderSrc = require('../../src/old/phongMaterial/shader-frag.glsl');
 
 export default class App extends EventEmitter {
 	constructor(params = {}) {
