@@ -487,24 +487,22 @@ void main(){
     vec3 cameraToVertex = normalize( vWorldPosition - cameraPosition );
 
     // Transforming Normal Vectors with the Inverse Transformation
-    vec3 worldNormal = inverseTransformDirection( vNormal, viewMatrix );
-    
-    // gl_FragColor = vec4( outgoingLight, diffuseColor.a );
+    vec3 worldNormal = vNormal; //inverseTransformDirection( vNormal, viewMatrix );
     
     vec3 reflectVec;
     if(uIsReflect){
-        reflectVec = reflect( cameraToVertex, vNormal );
+        reflectVec = reflect( cameraToVertex, worldNormal );
     }else{
         reflectVec = refract( cameraToVertex, worldNormal, refractionRatio );
     }
     
     
-    vec4 envColor = textureCube( envMap, vec3( -1. * flipEnvMap * reflectVec.x, reflectVec.yz ) );
-    // envColor = envMapTexelToLinear( envColor );
+    vec4 envColor = textureCube( envMap, vec3(  flipEnvMap * reflectVec.x, reflectVec.yz ) );
+    envColor = envMapTexelToLinear( envColor );
     outgoingLight = mix( outgoingLight, outgoingLight * envColor.xyz, specularStrength * reflectivity );
     
     gl_FragColor = vec4( outgoingLight, diffuseColor.a );
-    gl_FragColor = vec4( envColor );
+    // gl_FragColor = vec4( envColor );
     // gl_FragColor = vec4(normal/2.0 + vec3(0.5), 1.0);
     
     
