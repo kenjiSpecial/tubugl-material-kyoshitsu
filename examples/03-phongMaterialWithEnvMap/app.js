@@ -22,6 +22,9 @@ import posYImageURL from '../assets/envmap/posy.jpg';
 import negYImageURL from '../assets/envmap/negy.jpg';
 import posZImageURL from '../assets/envmap/posz.jpg';
 import negZImageURL from '../assets/envmap/negz.jpg';
+import { phongMaterial } from '../../src/phongMaterial/phongMaterial';
+
+phongMaterial();
 
 const cubemapImageURLArray = [
 	posXImageURL,
