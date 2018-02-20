@@ -3,6 +3,25 @@ precision highp int;
 
 #define GAMMA_FACTOR 2
 
+uniform float reflectivity;
+uniform float envMapIntensity;
+
+varying vec3 vWorldPosition;
+varying vec3 vViewPosition;
+varying vec3 vNormal;
+
+uniform samplerCube envMap;
+uniform float flipEnvMap;
+uniform float refractionRatio;
+
+uniform vec3 cameraPosition;
+
+uniform mat4 viewMatrix;
+uniform bool uIsReflect;
+
+varying vec2 vUv;
+
+
 struct ReflectedLight {
 	vec3 directDiffuse;
 	vec3 directSpecular;
@@ -378,7 +397,7 @@ uniform PointLight pointLight;
 // directLight is an out parameter as having it as a return value caused compiler errors on some devices
 void getPointDirectLightIrradiance( const in PointLight pointLight, const in GeometricContext geometry, out IncidentLight directLight ) {
 
-    vec3 lVector = pointLight.position - geometry.position;
+    vec3 lVector = vec3(viewMatrix * vec4(pointLight.position, 1.0)) - geometry.position;
     directLight.direction = normalize( lVector );
 
     float lightDistance = length( lVector );
@@ -399,24 +418,11 @@ vec4 GammaToLinear( in vec4 value, in float gammaFactor ) {
 vec4 envMapTexelToLinear( vec4 value ) { return GammaToLinear( value, float( GAMMA_FACTOR ) ); }
 
 // envmap pars fragment
-uniform float reflectivity;
-uniform float envMapIntensity;
+vec4 LinearToGamma( in vec4 value, in float gammaFactor ) {
+    return vec4( pow( value.xyz, vec3( 1.0 / gammaFactor ) ), value.w );
+}
 
-varying vec3 vWorldPosition;
-varying vec3 vViewPosition;
-varying vec3 vNormal;
-
-uniform samplerCube envMap;
-uniform float flipEnvMap;
-uniform float refractionRatio;
-
-uniform vec3 cameraPosition;
-
-uniform mat4 viewMatrix;
-uniform bool uIsReflect;
-
-varying vec2 vUv;
-
+vec4 linearToOutputTexel( vec4 value ) { return LinearToGamma( value, float( GAMMA_FACTOR ) ); }
     
 void main(){
     vec4 diffuseColor = vec4( diffuse, opacity );
@@ -453,7 +459,7 @@ void main(){
     // #include <lights_template>
     GeometricContext geometry;
 
-    geometry.position = vWorldPosition;
+    geometry.position = -vViewPosition;
     geometry.normal = normal;
     geometry.viewDir = normalize( vViewPosition );
 
@@ -502,6 +508,7 @@ void main(){
     outgoingLight = mix( outgoingLight, outgoingLight * envColor.xyz, specularStrength * reflectivity );
     
     gl_FragColor = vec4( outgoingLight, diffuseColor.a );
+	gl_FragColor = linearToOutputTexel(gl_FragColor);
     // gl_FragColor = vec4( envColor );
     // gl_FragColor = vec4(normal/2.0 + vec3(0.5), 1.0);
     

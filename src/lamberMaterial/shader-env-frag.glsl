@@ -232,6 +232,12 @@ vec4 GammaToLinear( in vec4 value, in float gammaFactor ) {
 }
 vec4 envMapTexelToLinear( vec4 value ) { return GammaToLinear( value, float( GAMMA_FACTOR ) ); }
 
+vec4 LinearToGamma( in vec4 value, in float gammaFactor ) {
+    return vec4( pow( value.xyz, vec3( 1.0 / gammaFactor ) ), value.w );
+}
+
+vec4 linearToOutputTexel( vec4 value ) { return LinearToGamma( value, float( GAMMA_FACTOR ) ); }
+
 void main(){
     vec4 diffuseColor = vec4(diffuse, opacity);
     
@@ -272,4 +278,5 @@ void main(){
     gl_FragColor = vec4(outgoingLight, diffuseColor.a);
     // gl_FragColor = vec4(1.0);
     // gl_FragColor = vec4(vLightFront, 1.0);
+	gl_FragColor = linearToOutputTexel(gl_FragColor);
 }

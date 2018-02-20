@@ -278,9 +278,13 @@ export default class App extends EventEmitter {
 		this._width = width;
 		this._height = height;
 
-		this.canvas.width = this._width;
-		this.canvas.height = this._height;
-		this.gl.viewport(0, 0, this._width, this._height);
+		let pixelRatio = window.devicePixelRatio > 1 ? 1.5 : 1;
+		this.canvas.width = parseInt(this._width * pixelRatio);
+		this.canvas.height = parseInt(this._height * pixelRatio);
+		this.canvas.style.width = `${this._width}px`;
+		this.canvas.style.height = `${this._height}px`;
+
+		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
 
 		this._camera.updateSize(this._width, this._height);
 	}

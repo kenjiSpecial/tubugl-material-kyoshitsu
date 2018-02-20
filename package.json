@@ -12,6 +12,7 @@
     "dist00": "parcel build examples/00-phongMaterial/index.html -d docs/00 --public-url ./",
     "dist01": "parcel build examples/01-lamberMaterial/index.html -d docs/01 --public-url ./",
     "dist02": "parcel build examples/02-lamberMaterialWithEnvMap/index.html -d docs/02 --public-url ./",
+    "dist03": "parcel build examples/03-phongMaterialWithEnvMap/index.html -d docs/03 --public-url ./",
     "screenshot00": "node ./node/screenshot.js --dir=00",
     "screenshot02": "node ./node/screenshot.js --dir=02",
     "docs": "python -m SimpleHTTPServer 8080"

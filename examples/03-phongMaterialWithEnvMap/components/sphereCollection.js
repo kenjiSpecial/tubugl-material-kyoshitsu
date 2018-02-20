@@ -77,8 +77,6 @@ export class CustomSphereCollection extends Sphere {
 				}
 			}
 		}
-
-		console.log(this._program);
 	}
 
 	get specularColor() {
