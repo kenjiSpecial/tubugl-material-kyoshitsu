@@ -40,13 +40,13 @@ void main(){
 
     gl_Position = projectionMatrix * mvPosition;
 
-    vViewPosition = - mvPosition.xyz;
     
 
     vec4 worldPosition = modelMatrix * vec4( transformed, 1.0 );
 
     // #endif
     
+    vViewPosition = - mvPosition.xyz;
     // #include <envmap_vertex>
     vWorldPosition = worldPosition.xyz;
 

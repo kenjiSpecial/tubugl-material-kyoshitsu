@@ -453,7 +453,7 @@ void main(){
     // #include <lights_template>
     GeometricContext geometry;
 
-    geometry.position = - vViewPosition;
+    geometry.position = vWorldPosition;
     geometry.normal = normal;
     geometry.viewDir = normalize( vViewPosition );
 

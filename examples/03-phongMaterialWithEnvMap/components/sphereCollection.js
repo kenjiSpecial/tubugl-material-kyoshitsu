@@ -1,7 +1,7 @@
 // import { Cube } from 'tubugl-3d-shape';
 // import { Sphere } from 'tubugl-3d-shape/src/sphere';
 import { Sphere } from 'tubugl-3d-shape/build/tubu-3d-shape.js';
-import { mat4 } from 'gl-matrix';
+import { mat4, vec3 } from 'gl-matrix';
 import {
 	CULL_FACE,
 	BACK,
@@ -48,6 +48,10 @@ export class CustomSphereCollection extends Sphere {
 		let sideNum = 2;
 		this._modelArray = [];
 
+		this.shininess = 120;
+		this.specularColor = '#333333';
+		this.emissiveColor = '#111111';
+
 		for (let zz = -sideNum; zz <= sideNum; zz++) {
 			for (let xx = -sideNum; xx <= sideNum; xx++) {
 				for (let yy = -sideNum; yy <= sideNum; yy++) {
@@ -77,6 +81,23 @@ export class CustomSphereCollection extends Sphere {
 		console.log(this._program);
 	}
 
+	get specularColor() {
+		return this._specularColor;
+	}
+
+	set specularColor(value) {
+		this._specularColor = value;
+		this._glSpecular = chroma(this._specularColor).gl();
+	}
+
+	get emissiveColor() {
+		return this._emissiveColor;
+	}
+
+	set emissiveColor(value) {
+		this._emissiveColor = value;
+		this._glEmissive = chroma(this._emissiveColor).gl();
+	}
 	render(camera, ambientLight, pointLight, directionalLight, cubemapTexture) {
 		this._useProgram();
 		this._updateAttributes();
@@ -113,6 +134,7 @@ export class CustomSphereCollection extends Sphere {
 			pointLight.position[1],
 			pointLight.position[2]
 		);
+		// console.log(pointLight.position[0]);
 
 		this._gl.uniform3f(
 			this._program.getUniforms('pointLight.color').location,
@@ -176,6 +198,10 @@ export class CustomSphereCollection extends Sphere {
 				model.modelMatrix
 			);
 
+			/**
+			 * BlinnPhongMaterial
+			 */
+
 			this._gl.uniform3f(
 				this._program.getUniforms('diffuse').location,
 				model.glColor[0],
@@ -183,7 +209,22 @@ export class CustomSphereCollection extends Sphere {
 				model.glColor[2]
 			);
 
+			this._gl.uniform3f(
+				this._program.getUniforms('emissive').location,
+				this._glEmissive[0],
+				this._glEmissive[1],
+				this._glEmissive[2]
+			);
+
+			this._gl.uniform3f(
+				this._program.getUniforms('specular').location,
+				this._glSpecular[0],
+				this._glSpecular[1],
+				this._glSpecular[2]
+			);
+
 			this._gl.uniform1f(this._program.getUniforms('opacity').location, 1.0);
+			this._gl.uniform1f(this._program.getUniforms('shininess').location, this.shininess);
 
 			// draw
 			if (this._side === 'double') {
@@ -209,5 +250,13 @@ export class CustomSphereCollection extends Sphere {
 
 			this._gl.drawElements(TRIANGLES, this._cnt, UNSIGNED_SHORT, 0);
 		});
+	}
+
+	addGui(gui) {
+		let folder = gui.addFolder('sphere');
+
+		folder.add(this, 'shininess', 1, 100);
+		folder.addColor(this, 'specularColor');
+		folder.addColor(this, 'emissiveColor');
 	}
 }

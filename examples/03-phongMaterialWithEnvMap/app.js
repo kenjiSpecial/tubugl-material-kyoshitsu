@@ -90,6 +90,8 @@ export default class App extends EventEmitter {
 		pointLightPositionGui.add(this._pointLight, 'x', -800, 800).listen();
 		pointLightPositionGui.add(this._pointLight, 'y', -800, 800).listen();
 		pointLightPositionGui.add(this._pointLight, 'z', -1000, 1000).listen();
+
+		this._shapes[0].addGui(this.gui);
 	}
 
 	_makeTextures() {

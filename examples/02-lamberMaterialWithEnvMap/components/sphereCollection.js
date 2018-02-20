@@ -1,7 +1,7 @@
 // import { Cube } from 'tubugl-3d-shape';
 // import { Sphere } from 'tubugl-3d-shape/src/sphere';
 import { Sphere } from 'tubugl-3d-shape/build/tubu-3d-shape.js';
-import { mat4 } from 'gl-matrix';
+import { mat4, vec3 } from 'gl-matrix';
 import {
 	CULL_FACE,
 	BACK,
