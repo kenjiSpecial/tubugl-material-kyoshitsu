@@ -6,9 +6,11 @@ const defaultNormalVertexShaderSrc = require('./chunk/defaultNormalVertex.glsl')
 const beginVertex = require('./chunk/beginVertex.glsl');
 const projectVertex = require('./chunk/projectVertex.glsl');
 const envmapVertex = require('./chunk/envmapVertex.glsl');
+const bsdfs = require('./chunk/bsdfs.glsl');
 
 export let ShaderChunk = {
 	common: commonShaderSrc,
+	bsdfs: bsdfs,
 	envmapParsVertex: envmapParsVertexSrc,
 	beginNormalVertex: beginNormalVertexShaderSrc,
 	defaultNormalVertex: defaultNormalVertexShaderSrc,

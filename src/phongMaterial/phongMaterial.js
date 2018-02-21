@@ -66,7 +66,7 @@ uniform float shininess;
 uniform float opacity;
 
 #include <common>
-
+#include <bsdfs>
 
 void main(){
 
