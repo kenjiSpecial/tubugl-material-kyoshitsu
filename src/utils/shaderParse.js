@@ -1,6 +1,6 @@
 const { ShaderChunk } = require('./shaderChunk');
 
-export function shaderParse(shaderSrc, shaderChunk = ShaderChunk) {
+export function shaderParse(shaderSrc, shaderChunk = ShaderChunk, injectValue) {
 	shaderSrc = parseIncludes(shaderSrc, shaderChunk);
 
 	return shaderSrc;

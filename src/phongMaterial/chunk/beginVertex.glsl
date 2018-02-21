@@ -1,0 +1,1 @@
+vec3 transfromed = vec3(position);
