@@ -167,7 +167,7 @@ float punctualLightIntensityToIrradianceFactor( const in float lightDistance, co
 // directLight is an out parameter as having it as a return value caused compiler errors on some devices
 void getPointDirectLightIrradiance( const in PointLight pointLight, const in GeometricContext geometry, out IncidentLight directLight ) {
 
-    vec3 lVector = pointLight.position - geometry.position;
+    vec3 lVector = vec3(viewMatrix * vec4(pointLight.position, 1.0)) - geometry.position;
     directLight.direction = normalize( lVector );
 
     float lightDistance = length( lVector );

@@ -1,6 +1,7 @@
 // import { Cube } from 'tubugl-3d-shape';
 // import { Sphere } from 'tubugl-3d-shape/src/sphere';
 import { Sphere } from 'tubugl-3d-shape/build/tubu-3d-shape.js';
+import { Program } from 'tubugl-core';
 import { mat4, vec3 } from 'gl-matrix';
 import {
 	CULL_FACE,
@@ -15,6 +16,7 @@ import {
 	TRIANGLES,
 	UNSIGNED_SHORT
 } from 'tubugl-constants';
+import { phongMaterial } from '../../../src/phongMaterial/phongMaterial';
 const chroma = require('chroma-js');
 
 export class SphereModel {
@@ -77,6 +79,13 @@ export class CustomSphereCollection extends Sphere {
 				}
 			}
 		}
+
+		// console.log();
+		const { vertexShaderSrc, fragmentShaderSrc } = phongMaterial();
+
+		this._sideProgram = new Program(this._gl, vertexShaderSrc, fragmentShaderSrc);
+
+		this._originalProgram = this._program;
 	}
 
 	get specularColor() {
@@ -96,8 +105,13 @@ export class CustomSphereCollection extends Sphere {
 		this._emissiveColor = value;
 		this._glEmissive = chroma(this._emissiveColor).gl();
 	}
-	render(camera, ambientLight, pointLight, directionalLight, cubemapTexture) {
+	render(camera, ambientLight, pointLight, directionalLight, cubemapTexture, params) {
+		if (!params.isMaterialChunk) this._program = this._originalProgram;
+		else {
+			this._program = this._sideProgram;
+		}
 		this._useProgram();
+
 		this._updateAttributes();
 
 		this._gl.uniformMatrix4fv(

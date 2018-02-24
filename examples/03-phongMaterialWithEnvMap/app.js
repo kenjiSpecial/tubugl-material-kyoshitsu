@@ -219,24 +219,35 @@ export default class App extends EventEmitter {
 
 		this._camera.update();
 
-		this._shapes.forEach(shape => {
-			shape.render(
-				this._camera,
-				this._ambientLight,
-				this._pointLight,
-				this._directionalLight,
-				this._cubemapTexture
+		for (let ii = 0; ii < 2; ii++) {
+			this.gl.viewport(
+				0,
+				this.gl.canvas.height / 2 * ii,
+				this.gl.canvas.width,
+				this.gl.canvas.height / 2
 			);
-		});
-		this._skybox.render(this._camera);
 
-		if (this._debugPointLightShape)
-			this._debugPointLightShape.render(this._camera, this._pointLight);
-		// if (this._debugDirectionalLightShape) this._debugDirectionalLightShape.render(this._camera);
+			this._shapes.forEach(shape => {
+				shape.render(
+					this._camera,
+					this._ambientLight,
+					this._pointLight,
+					this._directionalLight,
+					this._cubemapTexture,
+					{ isMaterialChunk: ii }
+				);
+			});
 
-		this._helpers.forEach(helper => {
-			helper.render(this._camera);
-		});
+			this._skybox.render(this._camera);
+
+			if (this._debugPointLightShape)
+				this._debugPointLightShape.render(this._camera, this._pointLight);
+			// if (this._debugDirectionalLightShape) this._debugDirectionalLightShape.render(this._camera);
+
+			this._helpers.forEach(helper => {
+				helper.render(this._camera);
+			});
+		}
 	}
 
 	animateOut() {
@@ -287,9 +298,9 @@ export default class App extends EventEmitter {
 		this.canvas.style.width = `${this._width}px`;
 		this.canvas.style.height = `${this._height}px`;
 
-		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height / 2);
 
-		this._camera.updateSize(this._width, this._height);
+		this._camera.updateSize(this._width, this._height / 2);
 	}
 
 	destroy() {}

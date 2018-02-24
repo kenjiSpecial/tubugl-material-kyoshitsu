@@ -1,1 +1,5 @@
-vec3 transfromed = vec3(position);
+// beginVertex.glsl
+
+vec3 transformed = vec3(position);
+
+// beginVertex.glsl

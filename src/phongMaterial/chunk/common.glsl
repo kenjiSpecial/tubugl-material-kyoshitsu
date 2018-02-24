@@ -1,5 +1,6 @@
 // common glsl
 
+#define PI 3.14159265359
 #define PI2 6.28318530718
 #define PI_HALF 1.5707963267949
 #define RECIPROCAL_PI 0.31830988618
@@ -9,6 +10,8 @@
 
 #define saturate(a) clamp( a, 0.0, 1.0 )
 #define whiteCompliment(a) ( 1.0 - saturate( a ) )
+
+float pow2( const in float x ) { return x*x; }
 
 struct IncidentLight {
 	vec3 color;

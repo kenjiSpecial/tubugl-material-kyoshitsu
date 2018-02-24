@@ -1,1 +1,1 @@
-vWorldPosition = worldPosition.xyz;
+vWorldPosition = worldPosition.xyz;;
