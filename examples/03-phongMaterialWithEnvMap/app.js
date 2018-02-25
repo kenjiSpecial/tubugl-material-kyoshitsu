@@ -12,19 +12,16 @@ import { SkyBox } from './components/skybox';
 import { DirectionalLight } from '../../src/directionalLight';
 import { DirectionalLightHelper } from '../../src/directionalLightHelper';
 import { CubeMapTexture } from './components/cubeMapTexture';
-
-const phongVertexShaderSrc = require('../../src/phongMaterial/shader-vert.glsl');
-const phongFragmentShaderSrc = require('../../src/phongMaterial/shader-frag.glsl');
-
+import {
+	phongMaterialFragmentShaderSrc,
+	phongMaterialVertexShaderSrc
+} from '../../src/phongMaterial/phongMaterial';
 import posXImageURL from '../assets/envmap/posx.jpg';
 import negXImageURL from '../assets/envmap/negx.jpg';
 import posYImageURL from '../assets/envmap/posy.jpg';
 import negYImageURL from '../assets/envmap/negy.jpg';
 import posZImageURL from '../assets/envmap/posz.jpg';
 import negZImageURL from '../assets/envmap/negz.jpg';
-import { phongMaterial } from '../../src/phongMaterial/phongMaterial';
-
-phongMaterial();
 
 const cubemapImageURLArray = [
 	posXImageURL,
@@ -68,7 +65,7 @@ export default class App extends EventEmitter {
 			this._addGui();
 			this._makeDebugLightShape();
 		} else {
-			let descId = document.getElementById('tubugl-desc');
+			const descId = document.getElementById('tubugl-desc');
 			descId.style.display = 'none';
 		}
 	}
@@ -79,17 +76,17 @@ export default class App extends EventEmitter {
 
 		// let meshColorGui = this.gui.addFolder('mesh color');
 
-		let ambientLightFolder = this.gui.addFolder('ambinet light');
+		const ambientLightFolder = this.gui.addFolder('ambinet light');
 		ambientLightFolder.addColor(this._ambientLight, 'lightColor');
 
 		this._directionalLightFolder = this.gui.addFolder('directional light');
 
-		let pointLightFolder = this.gui.addFolder('point light');
+		const pointLightFolder = this.gui.addFolder('point light');
 		pointLightFolder.addColor(this._pointLight, 'lightColor');
 		pointLightFolder.add(this._pointLight, 'decay', 0, 1).step(0.001);
 		pointLightFolder.add(this._pointLight, 'distance', 10, 3000);
 
-		let pointLightPositionGui = pointLightFolder.addFolder('position');
+		const pointLightPositionGui = pointLightFolder.addFolder('position');
 		pointLightPositionGui.add(this._pointLight, 'x', -800, 800).listen();
 		pointLightPositionGui.add(this._pointLight, 'y', -800, 800).listen();
 		pointLightPositionGui.add(this._pointLight, 'z', -1000, 1000).listen();
@@ -101,7 +98,7 @@ export default class App extends EventEmitter {
 		this._cubemapTexture = new CubeMapTexture(this.gl);
 	}
 	_updateCubeTexture() {
-		let size = 1024;
+		const size = 1024;
 		this._cubemapTexture
 			.bind()
 			.fromImages(this._cubeImages, size, size)
@@ -151,14 +148,14 @@ export default class App extends EventEmitter {
 	}
 
 	_makeSphere() {
-		let side = 40;
+		const side = 40;
 
 		this._shapes.push(
 			new CustomSphereCollection(
 				this.gl,
 				{
-					vertexShaderSrc: phongVertexShaderSrc,
-					fragmentShaderSrc: phongFragmentShaderSrc
+					vertexShaderSrc: phongMaterialVertexShaderSrc,
+					fragmentShaderSrc: phongMaterialFragmentShaderSrc
 				},
 				side,
 				15,
@@ -190,8 +187,8 @@ export default class App extends EventEmitter {
 		// this._onLoadAssetsDone();
 		this._cubeImages = [];
 		this._loadedCnt = 0;
-		cubemapImageURLArray.forEach((cubemapImageUrl, index) => {
-			let image = new Image();
+		cubemapImageURLArray.forEach(cubemapImageUrl => {
+			const image = new Image();
 			image.onload = () => {
 				this._loadedCnt++;
 				if (this._loadedCnt == cubemapImageURLArray.length) this._onLoadAssetsDone();
@@ -219,35 +216,29 @@ export default class App extends EventEmitter {
 
 		this._camera.update();
 
-		for (let ii = 0; ii < 2; ii++) {
-			this.gl.viewport(
-				0,
-				this.gl.canvas.height / 2 * ii,
-				this.gl.canvas.width,
-				this.gl.canvas.height / 2
+		// for (let ii = 0; ii < 2; ii++) {
+		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+
+		this._shapes.forEach(shape => {
+			shape.render(
+				this._camera,
+				this._ambientLight,
+				this._pointLight,
+				this._directionalLight,
+				this._cubemapTexture
 			);
+		});
 
-			this._shapes.forEach(shape => {
-				shape.render(
-					this._camera,
-					this._ambientLight,
-					this._pointLight,
-					this._directionalLight,
-					this._cubemapTexture,
-					{ isMaterialChunk: ii }
-				);
-			});
+		this._skybox.render(this._camera);
 
-			this._skybox.render(this._camera);
+		if (this._debugPointLightShape)
+			this._debugPointLightShape.render(this._camera, this._pointLight);
+		// if (this._debugDirectionalLightShape) this._debugDirectionalLightShape.render(this._camera);
 
-			if (this._debugPointLightShape)
-				this._debugPointLightShape.render(this._camera, this._pointLight);
-			// if (this._debugDirectionalLightShape) this._debugDirectionalLightShape.render(this._camera);
-
-			this._helpers.forEach(helper => {
-				helper.render(this._camera);
-			});
-		}
+		this._helpers.forEach(helper => {
+			helper.render(this._camera);
+		});
+		// }
 	}
 
 	animateOut() {
@@ -292,15 +283,15 @@ export default class App extends EventEmitter {
 		this._width = width;
 		this._height = height;
 
-		let pixelRatio = window.devicePixelRatio > 1 ? 1.5 : 1;
+		const pixelRatio = window.devicePixelRatio > 1 ? 1.5 : 1;
 		this.canvas.width = parseInt(this._width * pixelRatio);
 		this.canvas.height = parseInt(this._height * pixelRatio);
 		this.canvas.style.width = `${this._width}px`;
 		this.canvas.style.height = `${this._height}px`;
 
-		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height / 2);
+		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
 
-		this._camera.updateSize(this._width, this._height / 2);
+		this._camera.updateSize(this._width, this._height);
 	}
 
 	destroy() {}

@@ -32,4 +32,11 @@ struct GeometricContext {
 	vec3 viewDir;
 };
 
+// http://en.wikibooks.org/wiki/GLSL_Programming/Applying_Matrix_Transformations
+vec3 inverseTransformDirection( in vec3 dir, in mat4 matrix ) {
+
+	return normalize( ( vec4( dir, 0.0 ) * matrix ).xyz );
+
+}
+
 // common.glsl

@@ -17,7 +17,7 @@ const envmapFragment = require('./chunk/envmapFragment.glsl');
 const envmapParsFragment = require('./chunk/envmapParsFragment.glsl');
 const specularmapFragment = require('./chunk/specularmapFragment.glsl');
 
-export let ShaderChunk = {
+export const ShaderChunk = {
 	common: commonShaderSrc,
 	bsdfs: bsdfs,
 	envmapParsVertex: envmapParsVertexSrc,

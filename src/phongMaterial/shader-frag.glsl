@@ -493,7 +493,7 @@ void main(){
     vec3 cameraToVertex = normalize( vWorldPosition - cameraPosition );
 
     // Transforming Normal Vectors with the Inverse Transformation
-    vec3 worldNormal = vNormal; //inverseTransformDirection( vNormal, viewMatrix );
+    vec3 worldNormal = inverseTransformDirection( vNormal, viewMatrix );
     
     vec3 reflectVec;
     if(uIsReflect){
@@ -511,6 +511,6 @@ void main(){
 	gl_FragColor = linearToOutputTexel(gl_FragColor);
     // gl_FragColor = vec4( envColor );
     // gl_FragColor = vec4(normal/2.0 + vec3(0.5), 1.0);
-    
+    // gl_FragColor.rgb = worldNormal/2. + vec3(0.5);
     
 }

@@ -16,7 +16,6 @@ import {
 	TRIANGLES,
 	UNSIGNED_SHORT
 } from 'tubugl-constants';
-import { phongMaterial } from '../../../src/phongMaterial/phongMaterial';
 const chroma = require('chroma-js');
 
 export class SphereModel {
@@ -52,15 +51,15 @@ export class CustomSphereCollection extends Sphere {
 
 		this.shininess = 120;
 		this.specularColor = '#333333';
-		this.emissiveColor = '#111111';
+		this.emissiveColor = '#000000';
 
 		for (let zz = -sideNum; zz <= sideNum; zz++) {
 			for (let xx = -sideNum; xx <= sideNum; xx++) {
 				for (let yy = -sideNum; yy <= sideNum; yy++) {
 					let color = {
 						h: parseInt(255 * (xx + sideNum) / (2 * sideNum + 1)),
-						s: 0.5,
-						l: 0.3 + 0.6 * (zz + sideNum) / (2 * sideNum + 1)
+						s: 0.5 + 0.5 * (zz + sideNum) / (2 * sideNum),
+						l: 0.5
 					};
 					let reflectValue = (1 + yy + sideNum) / (sideNum * 2 + 1);
 					let refractionRatio = (1 + yy + sideNum) / (sideNum * 2 + 1) * 0.5 + 0.5;
@@ -79,13 +78,6 @@ export class CustomSphereCollection extends Sphere {
 				}
 			}
 		}
-
-		// console.log();
-		const { vertexShaderSrc, fragmentShaderSrc } = phongMaterial();
-
-		this._sideProgram = new Program(this._gl, vertexShaderSrc, fragmentShaderSrc);
-
-		this._originalProgram = this._program;
 	}
 
 	get specularColor() {
@@ -105,11 +97,7 @@ export class CustomSphereCollection extends Sphere {
 		this._emissiveColor = value;
 		this._glEmissive = chroma(this._emissiveColor).gl();
 	}
-	render(camera, ambientLight, pointLight, directionalLight, cubemapTexture, params) {
-		if (!params.isMaterialChunk) this._program = this._originalProgram;
-		else {
-			this._program = this._sideProgram;
-		}
+	render(camera, ambientLight, pointLight, directionalLight, cubemapTexture) {
 		this._useProgram();
 
 		this._updateAttributes();

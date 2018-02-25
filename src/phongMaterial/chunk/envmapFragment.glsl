@@ -4,7 +4,7 @@
 vec3 cameraToVertex = normalize( vWorldPosition - cameraPosition );
 
 // Transforming Normal Vectors with the Inverse Transformation
-vec3 worldNormal = vNormal; //inverseTransformDirection( vNormal, viewMatrix );
+vec3 worldNormal = inverseTransformDirection( vNormal, viewMatrix );
 
 vec3 reflectVec;
 if(uIsReflect){

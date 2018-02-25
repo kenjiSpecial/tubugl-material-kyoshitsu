@@ -114,15 +114,10 @@ void main(){
 }`;
 }
 
-export function phongMaterial() {
-	// parse vertex shader
-	let vertexShader = vertexShaderFunc(varyings, uniforms, attributes);
-	let vertexShaderSrc = shaderParse(vertexShader, ShaderChunk);
+// parse vertex shader
+const vertexShader = vertexShaderFunc(varyings, uniforms, attributes);
+export const phongMaterialVertexShaderSrc = shaderParse(vertexShader, ShaderChunk);
 
-	// parse fragment shader
-	let fragmentShader = fragmentShaderFunc('', uniforms);
-	let fragmentShaderSrc = shaderParse(fragmentShader, ShaderChunk);
-	// console.log(fragmentShaderSrc);
-
-	return { vertexShaderSrc: vertexShaderSrc, fragmentShaderSrc: fragmentShaderSrc };
-}
+// parse fragment shader
+const fragmentShader = fragmentShaderFunc('', uniforms);
+export const phongMaterialFragmentShaderSrc = shaderParse(fragmentShader, ShaderChunk);
