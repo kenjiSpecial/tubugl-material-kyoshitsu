@@ -99,6 +99,7 @@ export class CustomSphereCollection extends Sphere {
 	}
 	render(camera, ambientLight, pointLight, directionalLight, cubemapTexture) {
 		this._useProgram();
+		console.log(this._program);
 
 		this._updateAttributes();
 

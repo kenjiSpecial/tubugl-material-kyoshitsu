@@ -13,8 +13,12 @@ import { DirectionalLight } from '../../src/directionalLight';
 import { DirectionalLightHelper } from '../../src/directionalLightHelper';
 import { CubeMapTexture } from './components/cubeMapTexture';
 
-const lamberVertexShaderSrc = require('../../src/lamberMaterial/shader-env-vert.glsl');
-const lamberFragmentShaderSrc = require('../../src/lamberMaterial/shader-env-frag.glsl');
+// const lamberVertexShaderSrc = require('../../src/lamberMaterial/shader-env-vert.glsl');
+// const lamberFragmentShaderSrc = require('../../src/lamberMaterial/shader-env-frag.glsl');
+import {
+	lamberVertexShaderSrc,
+	lamberFragmentShaderSrc
+} from '../../src/lamberMaterial/lamberMaterial';
 
 import posXImageURL from '../assets/envmap/posx.jpg';
 import negXImageURL from '../assets/envmap/negx.jpg';

@@ -84,6 +84,7 @@ export class CustomSphereCollection extends Sphere {
 			false,
 			camera.viewMatrix
 		);
+		console.log(this._program.getUniforms('projectionMatrix'));
 		this._gl.uniformMatrix4fv(
 			this._program.getUniforms('projectionMatrix').location,
 			false,
