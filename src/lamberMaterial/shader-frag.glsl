@@ -4,6 +4,7 @@ precision highp int;
 uniform vec3 diffuse;
 uniform vec3 emissive;
 uniform float opacity;
+uniform mat4 viewMatrix;
 
 varying vec3 vLightFront;
 varying vec3 vLightBack;

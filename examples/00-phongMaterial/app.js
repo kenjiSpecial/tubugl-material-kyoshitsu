@@ -117,7 +117,7 @@ export default class App extends EventEmitter {
 	}
 
 	_makeLight() {
-		this._pointLight = new PointLight(0, 0, 400, 20, '#ffffff', 150);
+		this._pointLight = new PointLight(0, 0, 400, '#ffffff', 150, 20);
 	}
 
 	_makeDebugLightShape() {
